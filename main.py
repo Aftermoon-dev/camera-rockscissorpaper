@@ -66,7 +66,6 @@ class CameraThread(QThread):
                 # pyqtSignal로 QPixmap 형태로 변환된 카메라 프레임 보내기
                 self.changePixelMap.emit(pixmap)
 
-# 실행
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     mainWindow = WindowClass()
