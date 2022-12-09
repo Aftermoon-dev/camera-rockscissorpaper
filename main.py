@@ -8,7 +8,6 @@ from PyQt5 import uic
 # UI File 불러오기
 ui_file = uic.loadUiType("rockscissorpaper.ui")[0]
 
-
 # UI 관련 처리
 class WindowClass(QMainWindow, ui_file):
     def __init__(self):
