@@ -4,6 +4,7 @@ from PyQt5.QtCore import QThread, pyqtSignal, Qt, pyqtSlot
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5 import uic
+import random_module
 
 # UI File 불러오기
 ui_file = uic.loadUiType("rockscissorpaper.ui")[0]
