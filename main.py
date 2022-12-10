@@ -16,7 +16,11 @@ class WindowClass(QMainWindow, ui_file):
         # Window 기본 설정
         self.setupUi(self)
         self.setWindowTitle("Rock-Scissor-Paper!")
+        self.loadInitialImage()
 
+        # 임시
+        # 주먹 냈을 때
+        self.rock(self.computerResult)
         self.initUI()
 
     def initUI(self):
@@ -32,7 +36,65 @@ class WindowClass(QMainWindow, ui_file):
     @pyqtSlot(QPixmap)
     def setImage(self, image):
         # 영상을 배치할 Label에 Pixmap 형태의 Image 파일 설정
-        self.camPlayer.setPixmap(image)
+        self.humanCamera.setPixmap(image)
+
+    def loadInitialImage(self):
+        # Human
+        # QPixmap 객체 생성
+        self.humanPartImg = QPixmap()
+        self.humanPartImg.load("images/humanPart.png")
+        self.humanPartImg = self.humanPartImg.scaledToWidth(290)
+        self.humanPartImg = self.humanPartImg.scaledToHeight(90)
+        # Label을 이용해 화면에 표시
+        self.humanPart.setPixmap(self.humanPartImg)
+
+        # HumanResult
+        # QPixmap 객체 생성
+        self.humanResultImg = QPixmap()
+        self.humanResultImg.load("images/empty.png")
+        self.humanResultImg = self.humanResultImg.scaledToWidth(70)
+        self.humanResultImg = self.humanResultImg.scaledToHeight(70)
+        # Label을 이용해 화면에 표시
+        self.humanResult.setPixmap(self.humanResultImg)
+
+        # Computer
+        # QPixmap 객체 생성
+        self.computerPartImg = QPixmap()
+        self.computerPartImg.load("images/computerPart.png")
+        self.computerPartImg = self.computerPartImg.scaledToWidth(290)
+        self.computerPartImg = self.computerPartImg.scaledToHeight(90)
+        # Label을 이용해 화면에 표시
+        self.computerPart.setPixmap(self.computerPartImg)
+
+        # Computer Result
+        # QPixmap 객체 생성
+        self.computerResultImg = QPixmap()
+        self.computerResultImg.load("images/empty.png")
+        self.computerResultImg = self.computerResultImg.scaledToWidth(70)
+        self.computerResultImg = self.computerResultImg.scaledToHeight(70)
+        # Label을 이용해 화면에 표시
+        self.computerResult.setPixmap(self.computerResultImg)
+
+    def rock(self, who):
+        self.rockImg = QPixmap()
+        self.rockImg.load("images/paper.png")
+        self.rockImg = self.rockImg.scaledToWidth(70)
+        self.rockImg = self.rockImg.scaledToHeight(70)
+        who.setPixmap(self.rockImg)
+
+    def scissor(self, who):
+        self.scissorImg = QPixmap()
+        self.scissorImg.load("images/paper.png")
+        self.scissorImg = self.rockImg.scaledToWidth(70)
+        self.scissorImg = self.rockImg.scaledToHeight(70)
+        who.setPixmap(self.scissorImg)
+
+    def paper(self, who):
+        self.paperImg = QPixmap()
+        self.paperImg.load("images/paper.png")
+        self.paperImg = self.paperImgImg.scaledToWidth(70)
+        self.paperImg = self.paperImgImg.scaledToHeight(70)
+        who.setPixmap(self.paperImgImg)
 
 
 # 카메라 쓰레드
