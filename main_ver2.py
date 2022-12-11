@@ -8,7 +8,6 @@ from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5 import uic
 import random_module
 
-
 # UI File 불러오기
 ui_file = uic.loadUiType("rockscissorpaper.ui")[0]
 
@@ -39,16 +38,6 @@ class WindowClass(QMainWindow, ui_file):
     def setImage(self, image):
         # 영상을 배치할 Label에 Pixmap 형태의 Image 파일 설정
         self.humanCamera.setPixmap(image)
-
-    def loadInitialImage(self):
-        # Computer Result
-        # QPixmap 객체 생성
-        self.computerResultImg = QPixmap()
-        self.computerResultImg.load("images/empty.png")
-        self.computerResultImg = self.computerResultImg.scaledToWidth(70)
-        self.computerResultImg = self.computerResultImg.scaledToHeight(70)
-        # Label을 이용해 화면에 표시
-        self.computerResult.setPixmap(self.computerResultImg)
 
     def rock(self, who):
         self.rockImg = QPixmap()
@@ -149,9 +138,7 @@ class CameraThread(QThread):
 
                         # 제스쳐 결과
                         if idx in rps_gesture.keys():
-                            result = rps_gesture[idx].upper()
                             cv2.putText(img, text=result, org=(int(res.landmark[0].x * img.shape[1]), int(res.landmark[0].y * img.shape[0] + 20)), fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1, color=(255, 255, 255), thickness=2)
-                            random_module.compareResult(result)
 
                         mp_drawing.draw_landmarks(img, res, mp_hands.HAND_CONNECTIONS)
 
