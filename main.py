@@ -2,9 +2,9 @@ import sys
 import cv2
 import mediapipe as mp
 import numpy as np
-from PyQt5.QtCore import QThread, pyqtSignal, Qt, pyqtSlot
+from PyQt5.QtCore import QThread, pyqtSignal, Qt, pyqtSlot, QCoreApplication
 from PyQt5.QtGui import QImage, QPixmap
-from PyQt5.QtWidgets import QMainWindow, QApplication
+from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
 from PyQt5 import uic
 import random_module
 import time
@@ -12,6 +12,8 @@ import time
 # UI File 불러오기
 ui_file = uic.loadUiType("rockscissorpaper.ui")[0]
 
+global score
+score = 0
 
 # UI 관련 처리
 class WindowClass(QMainWindow, ui_file):
@@ -21,6 +23,11 @@ class WindowClass(QMainWindow, ui_file):
         # Window 기본 설정
         self.setupUi(self)
         self.setWindowTitle("Rock-Scissor-Paper!")
+
+        # 버튼 이벤트
+        self.resetButton.clicked.connect(self.reset)
+        self.endButton.clicked.connect(self.end)
+        self.endButton.clicked.connect(QCoreApplication.instance().quit)
 
         # Computer 결과 관련 이미지
         self.computerResultImg = QPixmap()
@@ -42,18 +49,22 @@ class WindowClass(QMainWindow, ui_file):
         self.paperImg = self.paperImg.scaledToHeight(350)
 
         # 최종 결과 관련 이미지
+        self.finalResultImg = QPixmap()
+        self.finalResultImg.load("images/empty2.png")
+        self.finalResultImg = self.finalResultImg.scaledToWidth(660)
+        self.finalResultImg = self.finalResultImg.scaledToHeight(100)
         self.humanWinImg = QPixmap()
         self.humanWinImg.load("images/win.png")
-        self.humanWinImg = self.humanWinImg.scaledToWidth(620)
-        self.humanWinImg = self.humanWinImg.scaledToHeight(90)
+        self.humanWinImg = self.humanWinImg.scaledToWidth(660)
+        self.humanWinImg = self.humanWinImg.scaledToHeight(100)
         self.humanDrawImg = QPixmap()
         self.humanDrawImg.load("images/draw.png")
-        self.humanDrawImg = self.humanDrawImg.scaledToWidth(620)
-        self.humanDrawImg = self.humanDrawImg.scaledToHeight(90)
+        self.humanDrawImg = self.humanDrawImg.scaledToWidth(660)
+        self.humanDrawImg = self.humanDrawImg.scaledToHeight(100)
         self.humanLoseImg = QPixmap()
         self.humanLoseImg.load("images/lose.png")
-        self.humanLoseImg = self.humanLoseImg.scaledToWidth(620)
-        self.humanLoseImg = self.humanLoseImg.scaledToHeight(90)
+        self.humanLoseImg = self.humanLoseImg.scaledToWidth(660)
+        self.humanLoseImg = self.humanLoseImg.scaledToHeight(100)
 
         # 초기 이미지 설정
         self.loadInitialImage()
@@ -61,6 +72,7 @@ class WindowClass(QMainWindow, ui_file):
         self.initUI()
 
     def initUI(self):
+        global camThread
         # 카메라 쓰레드 생성
         camThread = CameraThread(self)
         # Thread의 함수 변화 값에 따라 setImage 함수 호출하도록 연결
@@ -95,6 +107,17 @@ class WindowClass(QMainWindow, ui_file):
         else:
             self.loadInitialImage()
 
+    def reset(self):
+        global score
+        score = 0
+        self.scoreNumLabel.setText(str(score))
+        self.scoreNumLabel.repaint()
+        self.result.setPixmap(self.finalResultImg)
+
+    def end(self):
+        global score
+        QMessageBox.information(self, "OK", f"총 {score}점을 획득하셨습니다")
+
     # Computer의 결과를 ui에 띄우기 위한 코드
     def loadInitialImage(self):
         self.computerResult.setPixmap(self.computerResultImg)
@@ -110,19 +133,32 @@ class WindowClass(QMainWindow, ui_file):
 
     # 최종 결과에 따른 사람의 승패 결과 ui 적용
     def win(self):
+        global score
         self.result.setPixmap(self.humanWinImg)
+        score += 1
+        self.scoreNumLabel.setText(str(score))
+        self.scoreNumLabel.repaint()
 
     def draw(self):
         self.result.setPixmap(self.humanDrawImg)
 
     def lose(self):
+        global score
         self.result.setPixmap(self.humanLoseImg)
+        if score > 0:
+            score -= 1
+            self.scoreNumLabel.setText(str(score))
+            self.scoreNumLabel.repaint()
+        else:
+            score = 0
+            self.scoreNumLabel.setText(str(score))
+            self.scoreNumLabel.repaint()
 
 
 # 한개의 손만 인식
 max_num_hands = 1
 
-# 11개의 제스쳐 데이터 
+# 11개의 제스쳐 데이터
 gesture = {
     0: 'fist', 1: 'one', 2: 'two', 3: 'three', 4: 'four', 5: 'five',
     6: 'six', 7: 'rock', 8: 'spiderman', 9: 'yeah', 10: 'ok',
