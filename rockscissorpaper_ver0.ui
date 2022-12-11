@@ -20,7 +20,7 @@
       <x>10</x>
       <y>90</y>
       <width>620</width>
-      <height>340</height>
+      <height>341</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -176,12 +176,37 @@ border-radius: 10px;</string>
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="result">
+   <widget class="QLabel" name="scoreTextLabel_2">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>440</y>
+      <width>41</width>
+      <height>87</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>순천 B</family>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-radius: 10px;</string>
+    </property>
+    <property name="text">
+     <string>vs</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="humanPart">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>440</y>
-      <width>620</width>
+      <y>439</y>
+      <width>265</width>
       <height>90</height>
      </rect>
     </property>
@@ -195,18 +220,14 @@ border-radius: 10px;</string>
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="computerBackground">
+   <widget class="QLabel" name="computerPart">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>540</y>
-      <width>620</width>
-      <height>340</height>
+      <x>370</x>
+      <y>440</y>
+      <width>260</width>
+      <height>90</height>
      </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 255, 255);
-</string>
     </property>
     <property name="text">
      <string/>
@@ -215,24 +236,30 @@ border-radius: 10px;</string>
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="computerResult">
+   <widget class="QLabel" name="humanResult">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>550</y>
-      <width>320</width>
-      <height>320</height>
+      <x>210</x>
+      <y>450</y>
+      <width>70</width>
+      <height>70</height>
      </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 255, 255);
-</string>
     </property>
     <property name="text">
      <string/>
     </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
+   </widget>
+   <widget class="QLabel" name="computerResult">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>450</y>
+      <width>70</width>
+      <height>70</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
   </widget>
