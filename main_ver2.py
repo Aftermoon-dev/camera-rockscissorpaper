@@ -2,9 +2,9 @@ import sys
 import cv2
 import mediapipe as mp
 import numpy as np
-from PyQt5.QtCore import QThread, pyqtSignal, Qt, pyqtSlot
+from PyQt5.QtCore import QThread, pyqtSignal, Qt, pyqtSlot, QCoreApplication
 from PyQt5.QtGui import QImage, QPixmap
-from PyQt5.QtWidgets import QMainWindow, QApplication
+from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
 from PyQt5 import uic
 import random_module
 import time
@@ -23,6 +23,10 @@ class WindowClass(QMainWindow, ui_file):
         # Window 기본 설정
         self.setupUi(self)
         self.setWindowTitle("Rock-Scissor-Paper!")
+
+        # 버튼 이벤트
+        self.resetButton.clicked.connect(self.reset)
+        self.endButton.clicked.connect(self.end)
 
         # Computer 결과 관련 이미지
         self.computerResultImg = QPixmap()
@@ -44,18 +48,22 @@ class WindowClass(QMainWindow, ui_file):
         self.paperImg = self.paperImg.scaledToHeight(350)
 
         # 최종 결과 관련 이미지
+        self.finalResultImg = QPixmap()
+        self.finalResultImg.load("images/empty2.png")
+        self.finalResultImg = self.finalResultImg.scaledToWidth(660)
+        self.finalResultImg = self.finalResultImg.scaledToHeight(100)
         self.humanWinImg = QPixmap()
         self.humanWinImg.load("images/win.png")
-        self.humanWinImg = self.humanWinImg.scaledToWidth(620)
-        self.humanWinImg = self.humanWinImg.scaledToHeight(90)
+        self.humanWinImg = self.humanWinImg.scaledToWidth(660)
+        self.humanWinImg = self.humanWinImg.scaledToHeight(100)
         self.humanDrawImg = QPixmap()
         self.humanDrawImg.load("images/draw.png")
-        self.humanDrawImg = self.humanDrawImg.scaledToWidth(620)
-        self.humanDrawImg = self.humanDrawImg.scaledToHeight(90)
+        self.humanDrawImg = self.humanDrawImg.scaledToWidth(660)
+        self.humanDrawImg = self.humanDrawImg.scaledToHeight(100)
         self.humanLoseImg = QPixmap()
         self.humanLoseImg.load("images/lose.png")
-        self.humanLoseImg = self.humanLoseImg.scaledToWidth(620)
-        self.humanLoseImg = self.humanLoseImg.scaledToHeight(90)
+        self.humanLoseImg = self.humanLoseImg.scaledToWidth(660)
+        self.humanLoseImg = self.humanLoseImg.scaledToHeight(100)
 
         # 초기 이미지 설정
         self.loadInitialImage()
@@ -63,6 +71,7 @@ class WindowClass(QMainWindow, ui_file):
         self.initUI()
 
     def initUI(self):
+        global camThread
         # 카메라 쓰레드 생성
         camThread = CameraThread(self)
         # Thread의 함수 변화 값에 따라 setImage 함수 호출하도록 연결
@@ -96,6 +105,17 @@ class WindowClass(QMainWindow, ui_file):
             self.lose()
         else:
             self.loadInitialImage()
+
+    def reset(self):
+        global score
+        score = 0
+        self.scoreNumLabel.setText(str(score))
+        self.scoreNumLabel.repaint()
+        self.result.setPixmap(self.finalResultImg)
+
+    def end(self):
+        global score
+        QMessageBox.information(self, "OK", f"총 {score}점을 획득하셨습니다")
 
     # Computer의 결과를 ui에 띄우기 위한 코드
     def loadInitialImage(self):

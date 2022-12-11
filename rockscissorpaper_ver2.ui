@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(241, 241, 241)</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="humanCamera">
     <property name="geometry">
@@ -123,7 +126,7 @@ border-radius: 10px;</string>
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="startButton">
+   <widget class="QPushButton" name="endButton">
     <property name="geometry">
      <rect>
       <x>480</x>
@@ -147,7 +150,7 @@ border: 0px;
 border-radius: 10px;</string>
     </property>
     <property name="text">
-     <string>START</string>
+     <string>END</string>
     </property>
    </widget>
    <widget class="QLabel" name="scoreNumLabel">
@@ -184,6 +187,9 @@ border-radius: 10px;</string>
       <width>620</width>
       <height>90</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(241, 241, 241);</string>
     </property>
     <property name="text">
      <string/>
