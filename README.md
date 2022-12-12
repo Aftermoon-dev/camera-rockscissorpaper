@@ -9,6 +9,13 @@
     OpenCV를 이용하여 손 동작을 인식해 컴퓨터와 가위바위보를 할 수 있습니다!
 </p>
 
+## Screenshots
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/3215313/206940730-93f89371-41b8-43ff-a4bd-64414e1e6897.png" width=30%>
+    <img src="https://user-images.githubusercontent.com/3215313/206940723-1de30e30-cf36-4b97-9414-5254ea8de9e5.png" width=30%>
+    <img src="https://user-images.githubusercontent.com/3215313/206940728-bead4ef6-fb15-4086-ad24-752cc8d69fef.png" width=30%>
+</p>
+
 ## Authors
 2022-2 가천대학교 AI•소프트웨어학부(소프트웨어전공) 오픈소스SW 텀프로젝트 **이김선고** 팀
 - 선민재, 고지민, 이주원, 김나현
